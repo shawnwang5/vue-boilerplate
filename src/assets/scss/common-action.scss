@@ -1,0 +1,11 @@
+@mixin circleImage($imageSize) {
+  width: $imageSize;
+  height: $imageSize;
+  border-radius: $imageSize;
+}
+
+@mixin textOverflowEllipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

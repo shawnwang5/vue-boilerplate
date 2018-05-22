@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "strict": true,
+        "sourceMap": false,
+        "removeComments": true,
+        "module": "ES6",
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "allowJs": true
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.vue"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
