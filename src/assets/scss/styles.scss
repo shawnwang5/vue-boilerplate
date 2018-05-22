@@ -1,0 +1,38 @@
+body {
+  & > #app-root {
+    &.no-transition {
+      & > .page {
+        transition: none;
+      }
+    }
+
+    & > .page {
+      width: 100%;
+      transition: all .3s;
+    }
+
+    /* 不需要动画时，隐藏前一个动画元素 */
+    .v-leave-active {
+      display: none;
+    }
+
+    .slide-right-enter-active,
+    .slide-left-enter-active {
+      position: absolute;
+      top: 0;
+      z-index: 100;
+    }
+
+    .slide-right-enter, .slide-left-leave-to {
+      transform: translate3d(100%, 0, 0);
+    }
+
+    .slide-right-enter-to, .slide-right-leave, .slide-left-enter-to, .slide-left-leave {
+      transform: translate3d(0, 0, 0);
+    }
+
+    .slide-right-leave-to, .slide-left-enter {
+      transform: translate3d(-100%, 0, 0);
+    }
+  }
+}

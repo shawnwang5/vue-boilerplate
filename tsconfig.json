@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "strict": true,
+        "sourceMap": false,
+        "module": "es2015",
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "allowJs": true,
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "src/*"
+            ]
+        }
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.vue"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
