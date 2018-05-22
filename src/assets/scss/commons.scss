@@ -1,0 +1,148 @@
+/** start commons.less **/
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  background-color: #FFF;
+}
+
+body {
+  font-size: 0.16rem;
+  text-align: center;
+}
+
+textarea {
+  resize: none;
+}
+
+.icon {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.form-control {
+  border: none;
+  outline: none;
+}
+
+.text-btn, .btn {
+  display: inline-block;
+  user-select: none;
+}
+
+.btn {
+  width: 80%;
+  color: #FFF;
+  line-height: 0.88rem;
+  background-color: #2BB9E6;
+  border-radius: 0.08rem;
+}
+
+.text-btn {
+  color: #2BB9E6;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+* {
+  -webkit-overflow-scrolling: touch;
+}
+
+.clearfix {
+  &::before, &::after {
+    content: '';
+    clear: both;
+  }
+}
+
+.icon, img {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.no-margin-top {
+  margin-top: 0 !important;
+}
+
+.no-margin-right {
+  margin-right: 0 !important;
+}
+
+.no-margin-bottom {
+  margin-bottom: 0 !important;
+}
+
+.no-margin-left {
+  margin-left: 0 !important;
+}
+
+.no-padding-top {
+  padding-top: 0 !important;
+}
+
+.no-padding-right {
+  padding-right: 0 !important;
+}
+
+.no-padding-bottom {
+  padding-bottom: 0 !important;
+}
+
+.no-padding-left {
+  padding-left: 0 !important;
+}
+
+.inline-block {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.text-error, .text-info {
+  font-size: 0.28rem;
+  margin: 0.1rem 0;
+  text-align: left;
+}
+
+.text-error {
+  color: red;
+}
+
+.text-info {
+  color: #000;
+}
+
+.stop-scroll {
+  height: 100%;
+  overflow: hidden;
+}
+
+.hidden {
+  display: none;
+}
+
+::-webkit-scrollbar {
+  width: 0.12rem;
+  height: 0.12rem;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 0.2rem;
+  background-color: #ffffff;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 1rem;
+  background-color: #77b5f3;
+}
+
+@media screen and (min-width: 750px) {
+  ::-webkit-scrollbar {
+    width: 0.06rem;
+  }
+}
+
+/** end commons.less **/
