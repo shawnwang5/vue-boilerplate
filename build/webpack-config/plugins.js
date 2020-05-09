@@ -2,6 +2,7 @@ const path = require('path')
 const os = require('os')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
@@ -37,6 +38,13 @@ const plugins = [
             notes: []
         },
         clearConsole: true,
+    }),
+    new webpack.IgnorePlugin({
+        checkResource: (resourcePath) => {
+            if (/moment\/locale\/(?!zh-cn)/.test(resourcePath)){
+                return true
+            }
+        },
     }),
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({

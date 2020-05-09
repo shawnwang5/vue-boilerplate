@@ -1,5 +1,5 @@
 export class DateUtils {
-    static showCountdownAccurateToDate (timeStr: string) {
+    static getCountdownStr(timeStr: string) {
         const TOTAL_TIME_FOR_SECOND = 1000
         const TOTAL_TIME_FOR_MINUTE = TOTAL_TIME_FOR_SECOND * 60
         const TOTAL_TIME_FOR_HOUR = TOTAL_TIME_FOR_MINUTE * 60

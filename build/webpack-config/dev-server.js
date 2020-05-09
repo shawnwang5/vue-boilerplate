@@ -4,8 +4,8 @@ const { devServerConfig } = require(`${projectPath}package.json`)
 
 module.exports = {
     watchContentBase: true,
-    useLocalIp: true,
-    open: true,
+    useLocalIp: false,
+    open: false,
     clientLogLevel: 'warning',
     openPage: 'index.html',
     host: '0.0.0.0',

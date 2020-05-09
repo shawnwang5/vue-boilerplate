@@ -1,10 +1,15 @@
 const { exec } = require('child_process')
+const chalk = require('chalk')
 const path = require('path')
 const projectPath = __dirname.replace(`build${path.sep}run`, '')
 let port = process.env.port || 9000
+const webpackDevServerPath = path.join(projectPath, 'node_modules/.bin/webpack-dev-server')
+const webpackConfigPath = path.join(projectPath, 'build/webpack.config.js')
 
 function run () {
-    const child = exec(`${projectPath}node_modules/.bin/webpack-dev-server --config ${projectPath}build/webpack.config.js --color`, {
+    const buildCommand = `${webpackDevServerPath} --config ${webpackConfigPath} --color`
+    console.log(chalk.blue(buildCommand))
+    const child = exec(buildCommand, {
         env: {
             port,
         },

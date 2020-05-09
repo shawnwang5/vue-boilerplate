@@ -7,11 +7,6 @@ const { webpackConfig } = require(`${projectPath}package.json`)
 module.exports = {
     rules: [
         {
-            test: /\.(ico)$/,
-            loader: 'url-loader',
-            options: { name: 'config/images/[name].[ext]' }
-        },
-        {
             test: /\.(png|svg|jpg|gif)$/, use: [ {
                 loader: 'file-loader',
                 options: { name: 'img/[name].[hash].[ext]' }
@@ -38,14 +33,20 @@ module.exports = {
         },
         {
             test: /\.js$/,
-            exclude: (resource) => {
-                if (/node_modules/.test(resource)) {
-                    const excludeRegArray = webpackConfig.transpileModules
-                    for (let i = 0; i < excludeRegArray.length; i++) {
-                        return !resource.includes(excludeRegArray[ i ])
+            exclude: (resourcePath) => {
+                const transplieRegArray = [ ...webpackConfig.transpileModules ]
+                if (/\Wnode_modules\W/.test(resourcePath)) {
+                    for (let i = 0, len = transplieRegArray.length; i < len; i++) {
+                        const transplieItem = transplieRegArray[ i ]
+                        if (typeof transplieItem === 'string') {
+                            return !resourcePath.includes(transplieItem)
+                        } else if (typeof transplieItem === 'object') {
+                            return !transplieItem.test(resourcePath)
+                        }
                     }
                     return true
                 }
+                return false
             },
             use: [ 'babel-loader' ]
         },
