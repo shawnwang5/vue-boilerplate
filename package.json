@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "scripts": {
         "serve": "build/bin/dev-server",
+        "build:dll": "webpack -p --progress --config build/webpack.dll.config.js",
         "build-dev": "cross-env NODE_ENV=development npm run build",
         "build-prod": "cross-env NODE_ENV=production npm run build",
         "build-analyze": "cross-env NODE_ENV=production isAnalyze=true npm run build",
@@ -15,14 +16,15 @@
             "muse-ui"
         ]
     },
-    "devServerConfig": {
-    },
+    "devServerConfig": {},
     "dependencies": {
         "@babel/polyfill": "^7.4.4",
         "animate.css": "^3.6.1",
         "axios": "^0.18.0",
         "moment": "^2.22.1",
         "muse-ui": "^3.0.2",
+        "muse-ui-message": "^0.2.1",
+        "muse-ui-toast": "^0.3.0",
         "numbro": "^2.0.6",
         "throttle-debounce": "^2.0.1",
         "vue": "~2.6.10",
@@ -38,10 +40,12 @@
         "@babel/polyfill": "^7.4.4",
         "@babel/preset-env": "^7.4.4",
         "@types/core-js": "^2.5.0",
-        "@types/node": "^11.13.8",
+        "@types/node": "^13.13.5",
         "autoprefixer": "^9.5.1",
         "babel-loader": "^8.0.5",
         "chalk": "^4.0.0",
+        "clean-webpack-plugin": "^3.0.0",
+        "copy-webpack-plugin": "^5.1.1",
         "cross-env": "^5.2.0",
         "css-loader": "^2.1.1",
         "cssnano": "^4.1.10",
@@ -57,14 +61,14 @@
         "sass": "^1.19.0",
         "sass-loader": "^7.1.0",
         "style-loader": "^0.23.1",
+        "terser-webpack-plugin": "^3.0.1",
         "ts-loader": "^5.4.4",
         "typescript": "^3.4.5",
-        "uglifyjs-webpack-plugin": "^2.1.2",
-        "vue-loader": "^15.7.0",
+        "vue-loader": "^15.9.2",
         "vue-template-compiler": "^2.6.10",
         "webpack": "^4.30.0",
         "webpack-bundle-analyzer": "^3.3.2",
-        "webpack-cli": "^3.3.0",
+        "webpack-cli": "^3.3.11",
         "webpack-dev-server": "^3.8.0"
     },
     "license": "MIT"

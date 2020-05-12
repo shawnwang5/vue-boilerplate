@@ -1,5 +1,6 @@
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const os = require('os')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 
 module.exports = {
     minimizer: [
@@ -11,16 +12,25 @@ module.exports = {
             },
             canPrint: true
         }),
-        new UglifyJsPlugin({
+        new TerserPlugin({
             test: /\.js$/i,
+            exclude: /^vendor/,
+            parallel: os.cpus().length,
+            sourceMap: true,
             extractComments: false,
-            uglifyOptions: {
+            terserOptions: {
+                ecma: 5,
                 warnings: false,
+                parse: {},
+                compress: {},
                 mangle: true,
+                keep_classnames: false,
                 keep_fnames: false,
                 output: {
+                    beautify: false,
                     comments: false,
-                    quote_style: '1', // 只用单引号
+                    // 只用单引号
+                    quote_style: '1',
                 },
             },
         }),

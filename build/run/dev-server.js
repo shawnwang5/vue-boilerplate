@@ -1,15 +1,16 @@
 const { exec } = require('child_process')
 const chalk = require('chalk')
 const path = require('path')
-const projectPath = __dirname.replace(`build${path.sep}run`, '')
+const projectPath = process.cwd()
 let port = process.env.port || 9000
 const webpackDevServerPath = path.join(projectPath, 'node_modules/.bin/webpack-dev-server')
 const webpackConfigPath = path.join(projectPath, 'build/webpack.config.js')
 
-function run () {
-    const buildCommand = `${webpackDevServerPath} --config ${webpackConfigPath} --color`
+function run() {
+    const buildCommand = `${webpackDevServerPath} --config ${webpackConfigPath} --color --progress`
     console.log(chalk.blue(buildCommand))
     const child = exec(buildCommand, {
+        maxBuffer: 2 * 1024 * 1024,
         env: {
             port,
         },
@@ -24,9 +25,7 @@ function run () {
             console.error(error.message)
         }
     })
-    child.stdout.on('data', (chunk) => {
-        console.log(chunk.toString())
-    })
+    child.stdout.pipe(process.stdout)
 }
 
 run()

@@ -1,28 +1,22 @@
 const { exec } = require('child_process')
 const path = require('path')
-const fs = require('fs')
-const fsUtils = require('nodejs-fs-utils')
 const chalk = require('chalk')
-const projectPath = __dirname.replace(`build${path.sep}run`, '')
+const projectPath = process.cwd()
 const distDirPath = path.join(projectPath, 'dist')
 const webpackPath = path.join(projectPath, 'node_modules/.bin/webpack')
 const webpackConfigPath = path.join(projectPath, 'build/webpack.config.js')
 
-function run () {
-    console.log(chalk.red(`remove dir: ${distDirPath}`))
-    fsUtils.removeSync(distDirPath, {
-        skipErrors: true, fs,
-    })
-    const buildCommand = `${webpackPath} --config ${webpackConfigPath}`
+function run() {
+    const buildCommand = `${webpackPath} --config ${webpackConfigPath} --progress`
     console.log(chalk.blue(buildCommand))
-    const child = exec(buildCommand, (error, stdout, stderr) => {
+    const child = exec(buildCommand, {
+        maxBuffer: 2 * 1024 * 1024,
+    }, (error, stdout, stderr) => {
         if (error) {
             console.error(error.message)
         }
     })
-    child.stdout.on('data', (chunk) => {
-        console.log(chunk.toString())
-    })
+    child.stdout.pipe(process.stdout)
 }
 
 run()

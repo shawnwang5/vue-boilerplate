@@ -1,6 +1,6 @@
 const path = require('path')
-const projectPath = __dirname.replace(`build${path.sep}webpack-config`, '')
-const { devServerConfig } = require(`${projectPath}package.json`)
+const projectPath = process.cwd()
+const { devServerConfig } = require(path.join(projectPath, 'package.json'))
 
 module.exports = {
     watchContentBase: true,
@@ -26,7 +26,7 @@ module.exports = {
     },
     before: function (app, server) {
     },
-    after (app, server) {
+    after(app, server) {
     },
     allowedHosts: []
 }
