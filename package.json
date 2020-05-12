@@ -40,7 +40,6 @@
         "@babel/polyfill": "^7.4.4",
         "@babel/preset-env": "^7.4.4",
         "@types/core-js": "^2.5.0",
-        "@types/node": "^13.13.5",
         "autoprefixer": "^9.5.1",
         "babel-loader": "^8.0.5",
         "chalk": "^4.0.0",

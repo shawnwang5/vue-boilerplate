@@ -1,5 +1,5 @@
 export class CopyUtils {
-    static copy (text: string) {
+    static copy(text: string) {
         return new Promise((resolve, reject) => {
             try {
                 const inputEle = document.createElement('textarea')
@@ -14,7 +14,7 @@ export class CopyUtils {
                 }
                 document.body.removeChild(inputEle)
             } catch (e) {
-                reject(`复制出错：${e}`)
+                reject(`复制出错：${e.message}`)
             }
         })
     }

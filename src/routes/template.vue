@@ -1,20 +1,38 @@
 <template>
-    <div class="page template">
-    </div>
+    <div class="page">$</div>
 </template>
 
 <script lang="ts">
-    import Vue from 'vue'
-    import Component from 'vue-class-component'
+import Vue from 'vue'
+import Component from 'vue-class-component'
 
-    @Component({})
-    export default class TemplatePage extends Vue {
-        mounted () {
-        }
+@Component({})
+export default class MyComponent extends Vue {
+    get query(): any {
+        return this.$route.query
     }
+
+    get refs(): any {
+        return this.$refs
+    }
+
+    async mounted() {
+        await this.initProperties()
+    }
+
+    async destroyed() {}
+
+    async initProperties() {}
+}
 </script>
 
 <style lang="scss" scoped>
-    .page.template {
-    }
+.page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    box-sizing: border-box;
+}
 </style>

@@ -33,7 +33,7 @@
 <script lang="ts">
     import Vue from 'vue'
     import Component from 'vue-class-component'
-    import { ValidatorUtils } from '../../../../utils/validator'
+    import { ValidatorUtils } from '@/utils/validator'
 
     @Component({})
     export default class GetCodeDialog extends Vue {

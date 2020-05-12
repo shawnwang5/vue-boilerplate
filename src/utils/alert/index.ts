@@ -1,5 +1,5 @@
-import { store } from '../../store'
-import { ALERT_DIALOG } from '../../store/modules/global-components'
+import { store } from '@/store'
+import { ALERT_DIALOG } from '@/store/modules/global-components'
 
 export interface SimpleAlertConfig {
     title?: string
@@ -15,7 +15,7 @@ export class AlertUtils {
     /**
      * 显示简单 alert
      */
-    static showSimpleAlert (opts: SimpleAlertConfig) {
+    static showSimpleAlert(opts: SimpleAlertConfig) {
         const {
             title = '',
             content = '',
