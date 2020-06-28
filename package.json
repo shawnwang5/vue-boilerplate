@@ -2,26 +2,26 @@
     "name": "vue-boilerplate",
     "version": "0.1.0",
     "scripts": {
-        "serve": "build/bin/dev-server",
+        "serve": "cross-env port=9003 build/bin/dev-server",
         "build:dll": "webpack -p --progress --config build/webpack.dll.config.js",
         "build-dev": "cross-env NODE_ENV=development npm run build",
         "build-prod": "cross-env NODE_ENV=production npm run build",
-        "build-analyze": "cross-env NODE_ENV=production isAnalyze=true npm run build",
-        "build": "cross-env baseUrl=/vue-boilerplate/dist/ build/bin/production",
-        "push": "git push -f"
+        "build-analyze": "cross-env NODE_ENV=production IS_ANALYZE=true npm run build",
+        "build": "cross-env baseUrl=/vue-boilerplate/dist/ build/bin/production"
     },
     "webpackConfig": {
         "externals": {},
         "transpileModules": [
             "muse-ui"
-        ]
+        ],
+        "webpackDefine": {}
     },
     "devServerConfig": {},
     "dependencies": {
         "@babel/polyfill": "^7.4.4",
         "animate.css": "^3.6.1",
         "axios": "^0.18.0",
-        "moment": "^2.22.1",
+        "moment": "^2.27.0",
         "muse-ui": "^3.0.2",
         "muse-ui-message": "^0.2.1",
         "muse-ui-toast": "^0.3.0",
@@ -56,6 +56,7 @@
         "node-sass": "^4.13.1",
         "nodejs-fs-utils": "^1.2.4",
         "optimize-css-assets-webpack-plugin": "^5.0.1",
+        "ora": "^4.0.4",
         "postcss-loader": "^3.0.0",
         "sass": "^1.19.0",
         "sass-loader": "^7.1.0",

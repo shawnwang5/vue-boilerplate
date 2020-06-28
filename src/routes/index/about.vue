@@ -13,13 +13,14 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import Component from 'vue-class-component'
+import Component, { mixins } from 'vue-class-component'
 import { State } from 'vuex-class'
 import { AppState } from '@/store/modules/app'
+import ParentVue from '@/routes/mixins/parent.ts'
 
 @Component({})
-export default class AboutPage extends Vue {
-    mounted() {}
+export default class AboutPage extends mixins(ParentVue) {
+    async mounted() {}
 }
 </script>
 

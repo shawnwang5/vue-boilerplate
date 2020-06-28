@@ -10,6 +10,8 @@ import SwipeLeftDelete from '@/components/swipe-left-delete/index.vue'
 import SwitchBtn from '@/components/switch-btn/index.vue'
 import Toast from '@/components/toast/index.vue'
 import Loading from '@/components/loading/index.vue'
+import TextScrollMulti from '@/components/text-scroll/multi-line.vue'
+import TextScrollSingle from '@/components/text-scroll/single-line.vue'
 
 const components: any[] = [
     Radio,
@@ -23,11 +25,13 @@ const components: any[] = [
     TabBar,
     SwitchBtn,
     Loading,
+    TextScrollMulti,
+    TextScrollSingle,
 ]
 
 export class MyComponents {
     static install() {
-        components.forEach((component) => {
+        components.forEach(component => {
             Vue.component(component.componentName, component)
         })
     }

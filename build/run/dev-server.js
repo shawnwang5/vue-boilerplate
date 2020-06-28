@@ -1,31 +1,34 @@
-const { exec } = require('child_process')
-const chalk = require('chalk')
-const path = require('path')
-const projectPath = process.cwd()
+#!/usr/bin/env node
+
+const spawn = require('cross-spawn')
 let port = process.env.port || 9000
-const webpackDevServerPath = path.join(projectPath, 'node_modules/.bin/webpack-dev-server')
-const webpackConfigPath = path.join(projectPath, 'build/webpack.config.js')
+const { webpackConfigPath } = require('../consts')
 
 function run() {
-    const buildCommand = `${webpackDevServerPath} --config ${webpackConfigPath} --color --progress`
-    console.log(chalk.blue(buildCommand))
-    const child = exec(buildCommand, {
-        maxBuffer: 2 * 1024 * 1024,
-        env: {
-            port,
-        },
-    }, (error, stdout, stderr) => {
-        if (error) {
-            if (error.message.includes('address already in use')) {
-                console.clear()
-                port++
-                run()
-                return
-            }
-            console.error(error.message)
+    const command = `npx webpack-dev-server --config ${webpackConfigPath} --color`
+    let file = '/bin/sh'
+    let args = ['-c', command]
+    if (process.platform === 'win32') {
+        file = process.env.comspec || 'cmd.exe'
+        args = ['/s', '/c', command]
+    }
+
+    const child = spawn(file, args, {
+        stdio: ['inherit', 'inherit', 'pipe'],
+        env: { ...process.env, IS_SERVE: 'true', port },
+    })
+    child.stderr.on('data', errMsg => {
+        console.error(`stderr: ${errMsg}`)
+        if (errMsg.includes('address already in use')) {
+            console.clear()
+            port++
+            run()
+            return
         }
     })
-    child.stdout.pipe(process.stdout)
+    child.on('close', code => {
+        console.log(`closed, code: ${code}`)
+    })
 }
 
 run()

@@ -1,26 +1,41 @@
-const { exec } = require('child_process')
-const path = require('path')
+const webpack = require('webpack')
 const chalk = require('chalk')
-const projectPath = process.cwd()
-const webpackPath = path.join(projectPath, 'node_modules/.bin/webpack')
-const webpackConfigPath = path.join(projectPath, 'build/webpack.config.js')
+const ora = require('ora')
+const { webpackConfigPath } = require('../consts')
+const webpackConfig = require(webpackConfigPath)
+
+const spinner = ora(`Building for ${process.env.NODE_ENV}...`)
+spinner.start()
 
 function run() {
-    const buildCommand = `${webpackPath} --config ${webpackConfigPath} --progress`
-    console.log(chalk.blue(buildCommand))
-    const child = exec(
-        buildCommand,
-        {
-            maxBuffer: 2 * 1024 * 1024,
-        },
-        (error, stdout, stderr) => {
-            if (error) {
-                console.error(error.message)
+    const compiler = webpack(webpackConfig)
+    compiler.run((err, stats) => {
+        spinner.stop()
+        if (err) {
+            console.error(err.stack || err)
+            if (err.details) {
+                console.error(err.details)
             }
+            return
         }
-    )
-
-    child.stdout.pipe(process.stdout)
+        const info = stats.toJson()
+        if (stats.hasErrors()) {
+            console.error(info.errors)
+        }
+        if (stats.hasWarnings()) {
+            console.warn(info.warnings)
+        }
+        process.stdout.write(
+            stats.toString({
+                colors: true,
+                modules: false,
+                children: false,
+                chunks: false,
+                chunkModules: false,
+            }) + '\n'
+        )
+        console.log(chalk.cyan('Build complete.\n'))
+    })
 }
 
 run()

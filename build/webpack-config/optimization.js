@@ -8,13 +8,12 @@ module.exports = {
             assetNameRegExp: /\.css$/g,
             cssProcessor: require('cssnano'),
             cssProcessorPluginOptions: {
-                preset: [ 'default', { discardComments: { removeAll: true } } ],
+                preset: ['default', { discardComments: { removeAll: true } }],
             },
-            canPrint: true
+            canPrint: true,
         }),
         new TerserPlugin({
             test: /\.js$/i,
-            exclude: /^vendor/,
             parallel: os.cpus().length,
             sourceMap: true,
             extractComments: false,
@@ -37,10 +36,10 @@ module.exports = {
     ],
     splitChunks: {
         chunks: 'all',
-        maxSize: 600 * 1024,
-        minSize: 400 * 1024,
+        maxSize: 244 * 1024,
+        minSize: 200 * 1024,
         minChunks: 1,
         automaticNameDelimiter: '.',
-        name: 'vendors',
+        name: true,
     },
 }

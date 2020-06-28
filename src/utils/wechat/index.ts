@@ -3,7 +3,7 @@ import { UrlUtils } from '@/utils/url'
 
 const wechat: any = require('weixin-js-sdk')
 wechat.hideAllNonBaseMenuItem()
-const appId = environments.wechat.appId
+const appId = environments.wechatAppId
 
 export class WechatUtils {
     static wechatConfig: any = {

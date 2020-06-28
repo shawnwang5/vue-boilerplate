@@ -4,18 +4,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import Component from 'vue-class-component'
+import Component, { mixins } from 'vue-class-component'
+import ParentVue from '@/routes/mixins/parent.ts'
 
 @Component({})
-export default class MyComponent extends Vue {
-    get query(): any {
-        return this.$route.query
-    }
-
-    get refs(): any {
-        return this.$refs
-    }
-
+export default class MyComponent extends mixins(ParentVue) {
     async mounted() {
         await this.initProperties()
     }

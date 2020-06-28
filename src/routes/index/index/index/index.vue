@@ -59,20 +59,21 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import Component from 'vue-class-component'
+import Component, { mixins } from 'vue-class-component'
 import { ValidatorUtils } from '@/utils/validator'
 import { LoadingUtils } from '@/utils/loading'
 import { ToastUtils } from '@/utils/toast'
 import GetCodeDialog from '@/routes/index/index/index/get-code.dialog.vue'
 import { State } from 'vuex-class'
 import { AppState } from '@/store/modules/app'
+import ParentVue from '@/routes/mixins/parent.ts'
 
 @Component({
     components: {
         'get-code-dialog': GetCodeDialog,
     },
 })
-export default class IndexPage extends Vue {
+export default class IndexPage extends mixins(ParentVue) {
     isSubmitting = false
     formData: any = {
         name: '',
@@ -80,19 +81,11 @@ export default class IndexPage extends Vue {
         gender: 2,
     }
 
-    get refs(): any {
-        return this.$refs
-    }
-
-    get query(): any {
-        return this.$route.query
-    }
-
     get submitBtnTxt() {
         return this.isSubmitting ? '正在提交，请稍候......' : '提交'
     }
 
-    mounted() {}
+    async mounted() {}
 
     onGenderRadioChange($event: any) {
         this.formData.gender = $event.value
@@ -171,12 +164,6 @@ export default class IndexPage extends Vue {
                 &.gender {
                     display: flex;
                     justify-content: flex-end;
-
-                    .radio.circle label > .icon.circle {
-                    }
-
-                    .radio input[type='radio']:checked + label > .icon.circle {
-                    }
                 }
             }
         }

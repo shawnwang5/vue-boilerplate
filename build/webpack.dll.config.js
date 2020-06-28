@@ -4,17 +4,21 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
-const isProduction = process.env.NODE_ENV === 'production'
-const projectPath = process.cwd()
-const { webpackConfig } = require(path.join(projectPath, 'package.json'))
+const {
+    projectPath,
+    packageJSON,
+    dllConfig,
+    dllPath,
+    isProduction,
+} = require('./consts')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const { dllArray } = require(path.join(projectPath, 'dll.config.js'))
-
-const dllPath = 'public/vendor'
+const stats = require('./webpack-config/stats.js')
+const { dllArray } = dllConfig
 
 module.exports = {
+    context: projectPath,
     entry: {
-        vendor: [
+        vendor1: [
             'vue',
             'vue-router',
             'vuex',
@@ -23,16 +27,21 @@ module.exports = {
             'vue-property-decorator',
             'axios',
             'throttle-debounce',
-            ...dllArray,
         ],
+        vendor2: [...dllArray],
     },
     output: {
         path: path.join(projectPath, dllPath),
         filename: '[name].dll.js',
-        sourceMapFilename: '[name].map',
         pathinfo: true,
         library: '[name]_dll',
     },
+    resolve: {
+        extensions: ['.ts', '.js', '.vue'],
+        mainFiles: ['index'],
+        modules: [path.resolve(projectPath, 'node_modules'), 'node_modules'],
+    },
+    stats,
     plugins: [
         new CleanWebpackPlugin({
             verbose: true,
@@ -93,7 +102,8 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                exclude: (resourcePath) => {
+                exclude: resourcePath => {
+                    const webpackConfig = packageJSON.webpackConfig || {}
                     const transplieRegArray = [
                         ...webpackConfig.transpileModules,
                     ]

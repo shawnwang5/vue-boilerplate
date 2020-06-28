@@ -1,15 +1,10 @@
-declare const process: any
+declare const API_BASE_URL: string
+declare const WECHAT_APP_ID: string
 
-export const apiBaseUrlMap = new Map()
-apiBaseUrlMap.set('development', '')
-apiBaseUrlMap.set('test', '')
-apiBaseUrlMap.set('production', '')
-const nodeEnv: string = process.env.NODE_ENV || 'development'
+let apiBaseUrl = API_BASE_URL
 
 export const environments = {
     docTitle: 'Vue Boilerplate',
-    apiBaseUrl: apiBaseUrlMap.get(nodeEnv),
-    wechat: {
-        appId: '',
-    },
+    apiBaseUrl,
+    wechatAppId: WECHAT_APP_ID,
 }

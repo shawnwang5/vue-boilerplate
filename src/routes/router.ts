@@ -55,7 +55,7 @@ function setPageTransition(to: Route, from: Route) {
 }
 
 function dealMaxWidthLimit(to: Route) {
-    document.body.style.maxWidth = to.meta.noMaxWidthLimit ? 'none' : '750px'
+    document.body.style.maxWidth = to.meta.limitMaxWidth ? '750px' : 'none'
 }
 
 function modifyTitle(to: Route) {

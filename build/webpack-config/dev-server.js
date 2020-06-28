@@ -1,6 +1,7 @@
 const path = require('path')
-const projectPath = process.cwd()
-const { devServerConfig } = require(path.join(projectPath, 'package.json'))
+const { projectPath, packageJSON } = require('../consts')
+
+const { devServerConfig } = packageJSON
 
 module.exports = {
     watchContentBase: true,
@@ -21,12 +22,10 @@ module.exports = {
     historyApiFallback: {
         rewrites: [
             { from: /^\/$/, to: '/index.html' },
-            { from: /./, to: '/index.html' }
-        ]
+            { from: /./, to: '/index.html' },
+        ],
     },
-    before: function (app, server) {
-    },
-    after(app, server) {
-    },
-    allowedHosts: []
+    before: function(app, server) {},
+    after(app, server) {},
+    allowedHosts: [],
 }

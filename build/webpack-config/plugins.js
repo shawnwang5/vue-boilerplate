@@ -1,5 +1,6 @@
 const path = require('path')
 const os = require('os')
+const fs = require('fs')
 const webpack = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
@@ -8,15 +9,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const isProduction = process.env.NODE_ENV === 'production'
-const projectPath = process.cwd()
+const { projectPath, envFilePath, isServe, isAnalyze } = require('../consts')
 
 const plugins = [
-    new CleanWebpackPlugin({
-        verbose: true,
-        cleanStaleWebpackAssets: false,
-        cleanOnceBeforeBuildPatterns: ['**/*'],
-    }),
     new FriendlyErrorsWebpackPlugin({
         compilationSuccessInfo: {
             messages: compileMessages(),
@@ -24,6 +19,7 @@ const plugins = [
         },
         clearConsole: true,
     }),
+    new webpack.DefinePlugin(getDefinePluginObj()),
     new webpack.DllReferencePlugin({
         context: projectPath,
         manifest: require(path.join(
@@ -32,10 +28,11 @@ const plugins = [
         )),
     }),
     new webpack.IgnorePlugin({
-        checkResource: (resourcePath) => {
+        checkResource: resourcePath => {
             if (/moment\/locale\/(?!zh-cn)/.test(resourcePath)) {
                 return true
             }
+            return false
         },
     }),
     new VueLoaderPlugin(),
@@ -59,8 +56,39 @@ const plugins = [
     ]),
 ]
 
-if (process.env.isAnalyze) {
+if (!isServe) {
+    plugins.unshift(
+        new CleanWebpackPlugin({
+            verbose: true,
+            cleanStaleWebpackAssets: false,
+            cleanOnceBeforeBuildPatterns: ['**/*'],
+        })
+    )
+}
+
+if (isAnalyze) {
     plugins.push(new BundleAnalyzerPlugin())
+}
+
+function getDefinePluginObj() {
+    const obj = {}
+    for (let p of Object.keys(process.env)) {
+        if (p.startsWith('VUE_')) {
+            obj[p] = process.env[p]
+        }
+    }
+    if (fs.existsSync(envFilePath) && fs.statSync(envFilePath).isFile()) {
+        const fileContent = fs.readFileSync(envFilePath).toString()
+        const array = fileContent.split(/[\r\n]/)
+        for (let i = 0, len = array.length; i < len; i++) {
+            if (array[i].startsWith('#')) {
+                continue
+            }
+            const itemArray = array[i].split('=')
+            obj[itemArray[0]] = `'${itemArray[1]}'`
+        }
+    }
+    return obj
 }
 
 function getAccessUrlArray() {
@@ -68,7 +96,7 @@ function getAccessUrlArray() {
     const netInterfaces = Object.entries(os.networkInterfaces())
     for (let netInterface of netInterfaces) {
         const interfaceInfo = netInterface[1]
-        interfaceInfo.forEach((ipObj) => {
+        interfaceInfo.forEach(ipObj => {
             if (ipObj.family === 'IPv4') {
                 result.push(
                     ` - Access URL: http://${ipObj.address}:${process.env.port}/index.html`
@@ -81,7 +109,7 @@ function getAccessUrlArray() {
 
 function compileMessages() {
     const messages = []
-    if (!isProduction) {
+    if (isServe) {
         return getAccessUrlArray().concat(messages)
     }
     return messages

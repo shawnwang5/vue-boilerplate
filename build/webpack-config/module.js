@@ -1,8 +1,5 @@
-const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const isProduction = process.env.NODE_ENV === 'production'
-const projectPath = process.cwd()
-const { webpackConfig } = require(path.join(projectPath, 'package.json'))
+const { packageJSON, isProduction } = require('../consts')
 
 module.exports = {
     rules: [
@@ -42,7 +39,8 @@ module.exports = {
         },
         {
             test: /\.js$/,
-            exclude: (resourcePath) => {
+            exclude: resourcePath => {
+                const webpackConfig = packageJSON.webpackConfig || {}
                 const transplieRegArray = [...webpackConfig.transpileModules]
                 if (/\Wnode_modules\W/.test(resourcePath)) {
                     for (

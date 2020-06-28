@@ -1,5 +1,5 @@
 <template>
-    <div class="page index--select-date">
+    <div class="page index__index__select-date">
         <div class="page-content">
             <div class="form">
                 <div class="search form-group">
@@ -54,15 +54,17 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import Component from 'vue-class-component'
+import Component, { mixins } from 'vue-class-component'
 import { LoadingUtils } from '@/utils/loading'
 import { debounce } from 'throttle-debounce'
 import { ToastUtils } from '@/utils/toast'
+import { ListItem } from '@/types/common.ts'
+import ParentVue from '@/routes/mixins/parent.ts'
 
 const moment = require('moment')
 
 @Component({})
-export default class MyComponent extends Vue {
+export default class SelectDate extends mixins(ParentVue) {
     formData: any = {
         channel: '',
         startDate: new Date().toISOString().replace(/\d{2}T/, '01T'),
@@ -70,21 +72,13 @@ export default class MyComponent extends Vue {
         cardType: { text: '全部', value: '0' },
     }
     search: Function = () => {}
-    cardTypeList: { text: string; value: string }[] = [
-        { text: '全部', value: '0' },
-        { text: '类型1', value: '1' },
-        { text: '类型2', value: '2' },
+    cardTypeList: ListItem[] = [
+        { label: '全部', value: '0' },
+        { label: '类型1', value: '1' },
+        { label: '类型2', value: '2' },
     ]
 
-    get refs(): any {
-        return this.$refs
-    }
-
-    get query(): any {
-        return this.$route.query
-    }
-
-    mounted() {
+    async mounted() {
         this.search = debounce(300, this._search)
     }
 
@@ -134,7 +128,7 @@ export default class MyComponent extends Vue {
 </script>
 
 <style lang="scss">
-.page.index--select-date {
+.page.index__index__select-date {
     .datepicker {
         .mu-input {
             min-height: auto;
