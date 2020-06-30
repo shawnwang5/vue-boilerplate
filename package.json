@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "scripts": {
         "serve": "cross-env port=9003 build/bin/dev-server",
-        "build:dll": "webpack -p --progress --config build/webpack.dll.config.js",
+        "build-dll": "webpack -p --progress --config build/webpack.dll.config.js",
         "build-dev": "cross-env NODE_ENV=development npm run build",
         "build-prod": "cross-env NODE_ENV=production npm run build",
         "build-analyze": "cross-env NODE_ENV=production IS_ANALYZE=true npm run build",
