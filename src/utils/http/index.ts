@@ -1,110 +1,72 @@
 import axios from 'axios'
-import { AlertUtils } from '@/utils/alert'
 import { router } from '@/routes/router'
 import { UrlUtils } from '@/utils/url'
+import { AlertUtils } from '@/utils/alert'
 
 const errorMsgMap = new Map()
 errorMsgMap.set('Network Error', '网络或服务器错误，请稍后再试')
 
 export class HttpUtils {
-    static get(path: string, opts = {}) {
-        return new Promise(function(resolve, reject) {
-            axios
-                .get(path, opts)
-                .then(function(response) {
-                    resolve(response.data)
-                })
-                .catch(function(error) {
-                    reject(error)
-                })
-        })
+    static async get(url: string, data: any = {}, opts = {}) {
+        try {
+            if (UrlUtils.stringify(data)) {
+                url =
+                    url +
+                    (url.includes('?') ? '&' : '?') +
+                    UrlUtils.stringify(data)
+            }
+            const resp: any = await axios.get(url, opts)
+            return resp.data
+        } catch (e) {
+            throw e
+        }
     }
 
-    static post(path: string, data: any, opts = {}) {
-        const DEFAULT_POST_OPTS = {
+    static async post(url: string, data: any, opts = {}) {
+        const options = {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
+            ...opts,
         }
-        opts = { ...DEFAULT_POST_OPTS, ...opts }
-        return new Promise(function(resolve, reject) {
-            axios
-                .post(path, UrlUtils.stringify(data), opts)
-                .catch(function(error: any) {
-                    if (typeof error.response === 'undefined') {
-                        resolve({
-                            code: -1,
-                            message: errorMsgMap.get(error.message),
-                        })
-                    } else if (error.response.status === 500) {
-                        try {
-                            resolve(JSON.parse(error.response.data.message))
-                        } catch (e) {
-                            resolve({
-                                code: error.response.status,
-                                message: error.response.data.message,
-                            })
-                        }
-                    } else {
-                        reject(error)
-                    }
+        try {
+            let postData = UrlUtils.stringify(data)
+            if (options.headers['Content-Type'] === 'application/json') {
+                postData = data
+            }
+            const resp: any = await axios.post(url, postData, options)
+            if (resp && resp.data.code === 401) {
+                AlertUtils.showSimpleAlert({
+                    title: resp.data.message,
+                    okBtnFn() {
+                        router.push('/login')
+                    },
                 })
-                .then(function(response: any) {
-                    if (response && response.data.code === 401) {
-                        AlertUtils.showSimpleAlert({
-                            title: response.data.message,
-                            okBtnFn() {
-                                router.push('/login')
-                            },
-                        })
-                    } else if (response) {
-                        resolve(response.data)
-                    }
-                })
-        })
+            } else if (resp) {
+                return resp.data
+            }
+        } catch (e) {
+            if (typeof e.response === 'undefined') {
+                return {
+                    code: -1,
+                    message: e.message,
+                }
+            } else if (e.response.status === 500) {
+                const message = e.response.data.message
+                try {
+                    return JSON.parse(message)
+                } catch (e) {
+                    return { code: 500, message }
+                }
+            } else {
+                throw e
+            }
+        }
     }
 
-    static uploadFile(url: string, data: FormData, method = 'post') {
-        return new Promise(function(resolve, reject) {
-            axios({
-                url,
-                data,
-                method,
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            })
-                .catch(function(error: any) {
-                    if (typeof error.response === 'undefined') {
-                        resolve({
-                            code: -1,
-                            message: errorMsgMap.get(error.message),
-                        })
-                    } else if (error.response.status === 500) {
-                        try {
-                            resolve(JSON.parse(error.response.data.message))
-                        } catch (e) {
-                            resolve({
-                                code: error.response.status,
-                                message: error.response.data.message,
-                            })
-                        }
-                    } else {
-                        reject(error)
-                    }
-                })
-                .then(function(response: any) {
-                    if (response && response.data.code === 401) {
-                        AlertUtils.showSimpleAlert({
-                            title: response.data.message,
-                            okBtnFn() {
-                                router.push('/login')
-                            },
-                        })
-                    } else if (response) {
-                        resolve(response.data)
-                    }
-                })
+    static uploadFile(url: string, formData: FormData) {
+        return HttpUtils.post(url, formData, {
+            'Content-Type': 'multipart/form-data',
         })
     }
 }
