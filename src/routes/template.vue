@@ -1,31 +1,30 @@
 <template>
-    <div class="page">$</div>
+  <div class="page">$</div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component, { mixins } from 'vue-class-component'
-import ParentVue from '@/routes/mixins/parent.ts'
+import Vue from "vue";
+import Component from "vue-class-component";
 
 @Component({})
-export default class MyComponent extends mixins(ParentVue) {
-    async mounted() {
-        await this.initProperties()
-    }
+export default class MyComponent extends Vue {
+  async mounted() {
+    await this.initProperties();
+  }
 
-    async destroyed() {}
+  async destroyed() {}
 
-    async initProperties() {}
+  async initProperties() {}
 }
 </script>
 
 <style lang="scss" scoped>
 .page {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
-    box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  box-sizing: border-box;
 }
 </style>

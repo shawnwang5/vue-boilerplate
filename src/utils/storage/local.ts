@@ -1,40 +1,31 @@
+import StorageUtils from './storage'
+
 export class LocalStorageUtils {
-    static read (key: string): string {
-        try {
-            return window.localStorage.getItem(key) || ''
-        } catch (e) {
-            return ''
-        }
-    }
+  static read(key: string, encrypt = true) {
+    return StorageUtils.read(key, localStorage, encrypt)
+  }
 
-    static write (key: string, data: string) {
-        try {
-            return window.localStorage.setItem(key, data)
-        } catch (e) {
-        }
-    }
+  static readJSON(key: string, encrypt = true) {
+    return StorageUtils.readJSON(key, localStorage, encrypt)
+  }
 
-    static each (fn: Function) {
-        try {
-            for (let i = window.localStorage.length - 1; i >= 0; i--) {
-                const key = window.localStorage.key(i) || ''
-                fn(LocalStorageUtils.read(key), key)
-            }
-        } catch (e) {
-        }
-    }
+  static write(key: string, data: string, encrypt = true) {
+    return StorageUtils.write(key, data, localStorage, encrypt)
+  }
 
-    static remove (key: string) {
-        try {
-            return window.localStorage.removeItem(key)
-        } catch (e) {
-        }
-    }
+  static writeJSON(key: string, data: string, encrypt = true) {
+    return StorageUtils.writeJSON(key, data, localStorage, encrypt)
+  }
 
-    static clearAll () {
-        try {
-            return window.localStorage.clear()
-        } catch (e) {
-        }
-    }
+  static each(fn: Function, encrypt = true) {
+    return StorageUtils.each(fn, localStorage, encrypt)
+  }
+
+  static remove(key: string) {
+    return StorageUtils.remove(key, localStorage)
+  }
+
+  static clearAll() {
+    return StorageUtils.clearAll(localStorage)
+  }
 }

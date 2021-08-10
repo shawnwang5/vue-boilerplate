@@ -1,23 +1,20 @@
-export const TEMPLATE = 'TEMPLATE'
+export const TEMPLATE = "TEMPLATE";
 
-export interface TemplateState {
-}
+export interface TemplateState {}
 
-const state: TemplateState = {
-}
+const state: TemplateState = {};
 
-const getters = {}
+const getters = {};
 
 const mutations = {
-    [ TEMPLATE ] (state: TemplateState, payload: any) {
-    },
-}
+  [TEMPLATE](state: TemplateState, payload: any) {},
+};
 
-const actions = {}
+const actions = {};
 
 export default {
-    state,
-    getters,
-    mutations,
-    actions
-}
+  state,
+  getters,
+  mutations,
+  actions,
+};

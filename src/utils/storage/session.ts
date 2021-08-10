@@ -1,40 +1,31 @@
+import StorageUtils from './storage'
+
 export class SessionStorageUtils {
-    static read (key: string): string {
-        try {
-            return window.sessionStorage.getItem(key) || ''
-        } catch (e) {
-            return ''
-        }
-    }
+  static read(key: string, encrypt = true) {
+    return StorageUtils.read(key, sessionStorage, encrypt)
+  }
 
-    static write (key: string, data: string) {
-        try {
-            return window.sessionStorage.setItem(key, data)
-        } catch (e) {
-        }
-    }
+  static readJSON(key: string, encrypt = true) {
+    return StorageUtils.readJSON(key, sessionStorage, encrypt)
+  }
 
-    static each (fn: Function) {
-        try {
-            for (let i = window.sessionStorage.length - 1; i >= 0; i--) {
-                const key = window.sessionStorage.key(i) || ''
-                fn(SessionStorageUtils.read(key), key)
-            }
-        } catch (e) {
-        }
-    }
+  static write(key: string, data: string, encrypt = true) {
+    return StorageUtils.write(key, data, sessionStorage, encrypt)
+  }
 
-    static remove (key: string) {
-        try {
-            return window.sessionStorage.removeItem(key)
-        } catch (e) {
-        }
-    }
+  static writeJSON(key: string, data: string, encrypt = true) {
+    return StorageUtils.writeJSON(key, data, sessionStorage, encrypt)
+  }
 
-    static clearAll () {
-        try {
-            return window.sessionStorage.clear()
-        } catch (e) {
-        }
-    }
+  static each(fn: Function, encrypt = true) {
+    return StorageUtils.each(fn, sessionStorage, encrypt)
+  }
+
+  static remove(key: string) {
+    return StorageUtils.remove(key, sessionStorage)
+  }
+
+  static clearAll() {
+    return StorageUtils.clearAll(sessionStorage)
+  }
 }

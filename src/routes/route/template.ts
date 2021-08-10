@@ -1,2 +1,1 @@
-export const testRoutes: any[ ] = [
-]
+export const testRoutes: any[] = [];

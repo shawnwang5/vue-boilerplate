@@ -1,9 +1,10 @@
 /** start commons.less **/
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
   margin: 0 auto;
-  background-color: #FFF;
+  background-color: #fff;
   overflow: auto;
 }
 
@@ -26,21 +27,22 @@ textarea {
   outline: none;
 }
 
-.text-btn, .btn {
+.text-btn,
+.btn {
   display: inline-block;
   user-select: none;
 }
 
 .btn {
   width: 80%;
-  color: #FFF;
+  color: #fff;
   line-height: 0.88rem;
-  background-color: #2BB9E6;
+  background-color: #2bb9e6;
   border-radius: 0.08rem;
 }
 
 .text-btn {
-  color: #2BB9E6;
+  color: #2bb9e6;
   background-color: transparent;
   cursor: pointer;
 }
@@ -50,13 +52,15 @@ textarea {
 }
 
 .clearfix {
-  &::before, &::after {
-    content: '';
+  &::before,
+  &::after {
+    content: "";
     clear: both;
   }
 }
 
-.icon, img {
+.icon,
+img {
   display: inline-block;
   vertical-align: top;
 }
@@ -102,7 +106,8 @@ textarea {
   display: none !important;
 }
 
-.text-error, .text-info {
+.text-error,
+.text-info {
   font-size: 0.28rem;
   margin: 0.1rem 0;
   text-align: left;

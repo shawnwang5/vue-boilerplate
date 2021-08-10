@@ -7,7 +7,8 @@ a {
   text-decoration: none;
 }
 
-em, i {
+em,
+i {
   font-style: normal;
 }
 
@@ -15,12 +16,32 @@ th {
   font-weight: normal;
 }
 
-body, p, dl, dt, dd, ul, td, h1, h2, h3, h4, h5, h6, button, th, td {
+body,
+p,
+dl,
+dt,
+dd,
+ul,
+td,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+th,
+td {
   margin: 0;
   padding: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: normal;
 }
 
@@ -40,7 +61,8 @@ li {
   list-style: none;
 }
 
-input, textarea {
+input,
+textarea {
   outline: none;
   border-width: 0.02rem;
   padding: 0;
