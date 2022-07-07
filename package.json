@@ -22,7 +22,7 @@
         "animate.css": "^3.6.1",
         "axios": "^0.18.0",
         "crypto-js": "^4.1.1",
-        "moment": "^2.27.0",
+        "moment": "^2.29.4",
         "muse-ui": "^3.0.2",
         "muse-ui-message": "^0.2.1",
         "muse-ui-toast": "^0.3.0",
