@@ -70,24 +70,25 @@ module.exports = {
       new TerserPlugin({
         test: /\.js$/i,
         parallel: os.cpus().length,
-        sourceMap: true,
         extractComments: false,
         terserOptions: {
           ecma: 5,
           warnings: false,
           parse: {},
-          compress: {},
+          compress: {
+            drop_console: true,
+            keep_classnames: false,
+            keep_fnames: false,
+          },
           mangle: true,
-          keep_classnames: false,
-          keep_fnames: false,
           output: {
             beautify: false,
             comments: false,
             // 只用单引号
-            quote_style: '1'
-          }
-        }
-      })
+            quote_style: '1',
+          },
+        },
+      }),
     ],
     splitChunks: {
       chunks: 'all',
